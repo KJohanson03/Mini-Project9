@@ -50,7 +50,21 @@ public class JSONHash<K,V> {
    * Convert to a string (e.g., for printing).
    */
   public String toString() {
-    return "";          // STUB
+    if (this.buckets == null) {
+      return "{ }";
+    }
+    String holder = "";
+    holder = holder.concat("{ ");
+    for (int i = 0; i < this.buckets.length; i++) {
+      @SuppressWarnings("unchecked")
+      ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) this.buckets[i];
+      if (alist != null) {
+        for (KVPair<JSONString,JSONValue> pair : alist) {
+          holder = holder.concat(pair.key.toString() + ":" + pair.value.toString() + ", ");
+        } // for each pair in the bucket
+      } // if the current bucket is not null
+    } // for each bucket
+    holder = holder.concat("}");
   } // toString()
 
   /**
@@ -75,7 +89,9 @@ public class JSONHash<K,V> {
    * Write the value as JSON.
    */
   public void writeJSON(PrintWriter pen) {
-                        // STUB
+    pen.print(this.toString());
+  } // writeJSON(PrintWriter)
+
   } // writeJSON(PrintWriter)
 
   /**
@@ -93,7 +109,20 @@ public class JSONHash<K,V> {
    * Get the value associated with a key.
    */
   public JSONValue get(JSONString key) {
-    return null;        // STUB
+      int index = find(key);
+    @SuppressWarnings("unchecked")
+    ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[index];
+    if (alist == null) {
+      throw new IndexOutOfBoundsException("Invalid key: " + key);
+    } else {
+      KVPair<JSONString,JSONValue> pair = alist.get(0);
+      for (int i = 0; i < alist.size(); i++) {
+        if (alist.get(i).key().equals(key)) {
+          return alist.get(i).value();
+        }
+      }
+      return pair.value();
+    } // get
   } // get(JSONString)
 
   /**
