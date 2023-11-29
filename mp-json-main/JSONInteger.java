@@ -55,14 +55,24 @@ public class JSONInteger {
    * Compare to another object.
    */
   public boolean equals(Object other) {
-    return true;        // STUB
+    if (!(other instanceof JSONInteger)) {
+        return false;
+    } else {
+        JSONInteger temp = (JSONInteger) other;
+        return temp.value.equals(this.value);
+    }
   } // equals(Object)
 
   /**
    * Compute the hash code.
    */
   public int hashCode() {
-    return 0;           // STUB
+    if (this.value == null){
+      return 0; 
+    }
+    else {
+      return this.value.hashCode();
+    }
   } // hashCode()
 
   // +--------------------+------------------------------------------
@@ -72,8 +82,15 @@ public class JSONInteger {
   /**
    * Write the value as JSON.
    */
-  public void writeJSON(PrintWriter pen) {
-                        // STUB
+  public void writeJSON(PrintWriter pen) throws Exception{
+    if ((this.value.compareTo(BigInteger.ZERO) < 0) && (this.value.toString().charAt(1) != '0')) {
+        pen.println(this.value.toString());
+    }
+    else {
+        throw new Exception();
+    }
+
+    
   } // writeJSON(PrintWriter)
 
   /**
