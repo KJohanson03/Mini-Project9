@@ -60,11 +60,12 @@ public class JSONHash<K,V> {
       ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) this.buckets[i];
       if (alist != null) {
         for (KVPair<JSONString,JSONValue> pair : alist) {
-          holder = holder.concat(pair.key.toString() + ":" + pair.value.toString() + ", ");
+          holder = holder.concat(pair.key().toString() + ":" + pair.value().toString() + ", ");
         } // for each pair in the bucket
       } // if the current bucket is not null
     } // for each bucket
     holder = holder.concat("}");
+    return holder;
   } // toString()
 
   /**
@@ -92,11 +93,12 @@ public class JSONHash<K,V> {
     pen.print(this.toString());
   } // writeJSON(PrintWriter)
 
-  } // writeJSON(PrintWriter)
 
-  /**
+
+
+  /** 
    * Get the underlying value.
-   */
+  */
   public Iterator<KVPair<JSONString,JSONValue>> getValue() {
     return this.iterator();
   } // getValue()
@@ -137,7 +139,6 @@ public class JSONHash<K,V> {
    */
   @SuppressWarnings("unchecked")
   public void set(JSONString key, JSONValue value) {
-    JSONValue result = null;
     // If there are too many entries, expand the table.
     if (this.size > (this.buckets.length * LOAD_FACTOR)) {
       expand();
