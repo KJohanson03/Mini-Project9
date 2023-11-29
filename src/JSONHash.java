@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * JSON hashes/objects.
@@ -11,7 +12,20 @@ public class JSONHash<K,V> {
   // | Fields |
   // +--------+
 
+  /**
+   * The load factor for expanding the table.
+   * CONSTANT
+   */
+  static final double LOAD_FACTOR = 0.7;
+
     /**
+   * Our helpful random number generator, used primarily when expanding the size
+   * of the table..
+   */
+  Random rand;
+
+  /**
+   * 
    * The number of values currently stored in the hash table. We use this to
    * determine when to expand the hash table.
    */
@@ -140,7 +154,7 @@ public class JSONHash<K,V> {
    * Find out how many key/value pairs are in the hash table.
    */
   public int size() {
-    return 0;           // STUB
+    return this.size;
   } // size()
 
     /**
@@ -155,7 +169,6 @@ public class JSONHash<K,V> {
   /**
    * Determine if the hash table contains a particular key.
    */
-  @Override
   public boolean containsKey(JSONString key) {
     // STUB/HACK
     try {
@@ -165,6 +178,16 @@ public class JSONHash<K,V> {
       return false;
     } // try/catch
   } // containsKey(K)
+
+  /**
+   * Expand the size of the table.
+   */
+  void expand() {
+    // Figure out the size of the new table
+    System.out.println("test");
+    int newSize = 2 * this.buckets.length + rand.nextInt(10);
+    // STUB
+  } // expand()
 
 
 } // class JSONHash
