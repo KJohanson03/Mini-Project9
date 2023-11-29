@@ -84,7 +84,7 @@ public class JSONInteger {
    */
   public void writeJSON(PrintWriter pen) throws Exception{
     if ((this.value.compareTo(BigInteger.ZERO) < 0) && (this.value.toString().charAt(1) != '0')) {
-        pen.println(this.value.toString());
+        pen.println(this.toString());
     }
     else {
         throw new Exception();
