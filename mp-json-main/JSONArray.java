@@ -35,12 +35,17 @@ public class JSONArray {
    * Convert to a string (e.g., for printing).
    */
   public String toString() {
-    String holder = "";
-    for (int i = 0; i < this.values.size() - 1; i++){
-        holder = holder.concat(this.values.get(i).toString() + ",");
+    if (this.values.get(0) == null) {
+        pen.println("[ ]");
     }
-    holder = holder.concat(this.values.get(this.values.size() - 1).toString());
+    else {
+    String holder = "[ ";
+    for (int i = 0; i < this.values.size() - 1; i++){
+        holder = holder.concat(this.values.get(i).toString() + ", ");
+    }
+    holder = holder.concat(this.values.get(this.values.size() - 1).toString() + " ]");
     return holder;
+    }
   } // toString()
 
   /**
@@ -80,17 +85,7 @@ public class JSONArray {
    * Write the value as JSON.
    */
   public void writeJSON(PrintWriter pen) {
-    if (this.values.get(0) == null) {
-        pen.println("[ ]");
-    }
-    else {
-    String holder = "[ ";
-    for (int i = 0; i < this.values.size() - 1; i++){
-        holder = holder.concat(this.values.get(i).toString() + ", ");
-    }
-    holder = holder.concat(this.values.get(this.values.size() - 1).toString() + " ]");
-    pen.println(holder);
-    }
+    pen.print(this.toString());
   } // writeJSON(PrintWriter)
 
   /**
