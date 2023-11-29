@@ -35,21 +35,41 @@ public class JSONArray {
    * Convert to a string (e.g., for printing).
    */
   public String toString() {
-    return "";          // STUB
+    String holder = "";
+    for (int i = 0; i < this.values.size() - 1; i++){
+        holder = holder.concat(this.values.get(i).toString() + ",");
+    }
+    holder = holder.concat(this.values.get(this.values.size() - 1).toString());
+    return holder;
   } // toString()
 
   /**
    * Compare to another object.
    */
   public boolean equals(Object other) {
-    return true;        // STUB
+    if (!(other instanceof JSONArray)) {
+        return false;
+    } else {
+        JSONArray temp = (JSONArray) other;
+        for (int i = 0; i < this.values.size(); i++) {
+            if (!(this.values.get(i).equals(temp.values.get(i)))) {
+                return false;
+            }
+        }
+        return true;
+    }
   } // equals(Object)
 
   /**
    * Compute the hash code.
    */
   public int hashCode() {
-    return 0;           // STUB
+    if (this.values == null){
+      return 0;
+    }
+    else{
+      return this.values.hashCode();
+    }
   } // hashCode()
 
   // +--------------------+------------------------------------------
@@ -60,7 +80,17 @@ public class JSONArray {
    * Write the value as JSON.
    */
   public void writeJSON(PrintWriter pen) {
-                        // STUB
+    if (this.values.get(0) == null) {
+        pen.println("[ ]");
+    }
+    else {
+    String holder = "[ ";
+    for (int i = 0; i < this.values.size() - 1; i++){
+        holder = holder.concat(this.values.get(i).toString() + ", ");
+    }
+    holder = holder.concat(this.values.get(this.values.size() - 1).toString() + " ]");
+    pen.println(holder);
+    }
   } // writeJSON(PrintWriter)
 
   /**
