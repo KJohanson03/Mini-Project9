@@ -55,7 +55,7 @@ public class JSONReal {
    * Compare to another object.
    */
   public boolean equals(Object other) {
-    if (other instanceof JSONReal) { // mayvbe check if its equal to JSON STRING
+    if (other instanceof JSONReal) { 
       if ( (((JSONReal) other).getValue()).equals(this.value) ) {
         return true;
       } else {
@@ -71,7 +71,11 @@ public class JSONReal {
    * Compute the hash code.
    */
   public int hashCode() {
-    return 0;           // STUB
+    if (this.value == null) {
+      return 0;
+    } else {
+      return this.value.hashCode();
+    } // else 
   } // hashCode()
 
   // +--------------------+------------------------------------------
