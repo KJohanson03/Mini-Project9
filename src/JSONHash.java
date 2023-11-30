@@ -42,6 +42,16 @@ public class JSONHash<K,V> {
   // | Constructors |
   // +--------------+
 
+  /**
+   * Create a new hash table.
+   */
+  public JSONHash() {
+    this.rand = new Random();
+    this.clear();
+
+  } // ChainedHashTable
+
+
   // +-------------------------+-------------------------------------
   // | Standard object methods |
   // +-------------------------+
@@ -68,6 +78,7 @@ public class JSONHash<K,V> {
     return holder;
   } // toString()
 
+
   /**
    * Compare to another object.
    */
@@ -75,12 +86,18 @@ public class JSONHash<K,V> {
     return true;        // STUB
   } // equals(Object)
 
+
   /**
    * Compute the hash code.
    */
   public int hashCode() {
-    return 0;           // STUB
+    if (this.buckets == null){
+      return 0;
+    } else{
+      return this.buckets.hashCode();
+    } // else 
   } // hashCode()
+
 
   // +--------------------+------------------------------------------
   // | Additional methods |
@@ -213,11 +230,37 @@ public class JSONHash<K,V> {
    * Expand the size of the table.
    */
   void expand() {
-    // Figure out the size of the new table
-    System.out.println("test");
-    int newSize = 2 * this.buckets.length + rand.nextInt(10);
-    // STUB
-  } // expand()
+  // Figure out the size of the new table
+  int newSize = 2 * this.buckets.length + rand.nextInt(10);
+  // Remember the old table
+  Object[] oldBuckets = this.buckets;
+  // Create a new table of that size.
+  this.buckets = new Object[newSize];
+  // Move all buckets from the old table to their appropriate
+  // location in the new table.
+  for (int i = 0; i < oldBuckets.length; i++) {
+    @SuppressWarnings("unchecked")
+    ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) oldBuckets[i];
+    if (alist != null) {
+      for (KVPair<JSONString,JSONValue> pair : alist) {
+        this.set(pair.key(), pair.value());
+      } // for each pair in the arraylist
+    } // if 
+  } // for
+
+} // expand()
+
+
+
+
+  /**
+   * Clear the whole table.
+   */
+  public void clear() {
+    this.buckets = new Object[41];
+    this.size = 0;
+  } // clear()
+
 
 
 } // class JSONHash

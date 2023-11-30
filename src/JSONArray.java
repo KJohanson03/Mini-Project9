@@ -36,9 +36,8 @@ public class JSONArray {
    */
   public String toString() {
     if (this.values.get(0) == null) {
-        pen.println("[ ]");
-    }
-    else {
+        return ("[ ]");
+    } else {
     String holder = "[ ";
     for (int i = 0; i < this.values.size() - 1; i++){
         holder = holder.concat(this.values.get(i).toString() + ", ");
@@ -71,10 +70,9 @@ public class JSONArray {
   public int hashCode() {
     if (this.values == null){
       return 0;
-    }
-    else{
+    } else{
       return this.values.hashCode();
-    }
+    } // else 
   } // hashCode()
 
   // +--------------------+------------------------------------------

@@ -56,7 +56,7 @@ public class JSONString {
    * Compute the hash code.
    */
   public int hashCode() {
-    return 0;           // STUB
+    return this.value.hashCode();
   } // hashCode()
 
   // +--------------------+------------------------------------------
