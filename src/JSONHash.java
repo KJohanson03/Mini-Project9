@@ -83,8 +83,36 @@ public class JSONHash<K,V> {
    * Compare to another object.
    */
   public boolean equals(Object other) {
-    return true;        // STUB
-  } // equals(Object)
+    if (!(other instanceof JSONHash)) {
+       new Exception("not a JSONHash");
+    } 
+      @SuppressWarnings("unchecked")
+      JSONHash<K,V> newOther = (JSONHash<K,V>) other;
+    
+    for (int i = 0; i < this.buckets.length; i++) {
+      @SuppressWarnings("unchecked")
+      ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) this.buckets[i];
+      if (alist != null) {
+        for (KVPair<JSONString,JSONValue> pair : alist) {
+          // position of the bucket where the key could be 
+          int bucketPos = newOther.find(pair.key());
+
+          @SuppressWarnings("unchecked")
+          // array list at compared JSONHash
+          ArrayList<KVPair<JSONString,JSONValue>> blist = (ArrayList<KVPair<JSONString,JSONValue>>) newOther.buckets[bucketPos];
+
+          // iterates through the bucket to see if key value matches up 
+          for (int b = 0; b < blist.size();b++) {
+            if ( blist.get(b) == pair.value()) {
+              return true;
+            } // if 
+          } // for 
+        } // for each pair in the bucket
+      } // if the current bucket is not null
+    } // for each bucket 
+    
+    return false;
+  } // equals(Object)  
 
 
   /**
@@ -126,9 +154,10 @@ public class JSONHash<K,V> {
 
   /**
    * Get the value associated with a key.
+   * if key is not found return the value at index 0 
    */
   public JSONValue get(JSONString key) {
-      int index = find(key);
+    int index = find(key);
     @SuppressWarnings("unchecked")
     ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[index];
     if (alist == null) {
