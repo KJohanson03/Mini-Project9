@@ -177,7 +177,57 @@ public class JSONHash<K,V> {
    * Get all of the key/value pairs.
    */
   public Iterator<KVPair<JSONString,JSONValue>> iterator() {
-    return null;        // STUB
+        return new Iterator<KVPair<JSONString,JSONValue>>() { /** The position in the underlying array. */ 
+        int pos = 0;
+        int aPos = 0;
+        
+      public boolean hasNext() {
+        if (this.buckets[pos] != null) {
+          ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[pos];
+          if (aPos < alist.size() - 1 && alist.get(aPos + 1) != null) {
+            return true;
+          } else {
+            int temp = aPos;
+            aPos = 0;
+            pos++;
+            hasNext();
+            aPos = temp;
+            pos--;
+          } // else
+        } else if (pos < this.buckets.length - 1) {
+            int temp = aPos;
+            aPos = 0;
+            pos++;
+            hasNext();
+            aPos = temp;
+            pos--;
+        } else {
+          return false;
+        } // else
+      } // hasNext()
+    
+      public KVPair<JSONString, JSONValue> next() {
+        if (this.buckets[pos] != null) {
+          ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[pos];
+          if (aPos < alist.size() - 1) {
+            KVPair<JSONString,JSONValue> pair = alist.get();
+            aPos++;
+            return pair;
+          } else {
+            aPos = 0;
+            pos++;
+            next();
+          } // else
+        } else if (pos < this.buckets.length - 1) {
+            int temp = aPos;
+            aPos = 0;
+            pos++;
+            hasNext();
+        } else {
+          throw new IndexOutOfBoundsException("No no no");
+        } // else 
+      } // next()
+    };
   } // iterator()
 
   /**
