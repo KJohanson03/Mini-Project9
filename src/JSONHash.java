@@ -182,7 +182,8 @@ public class JSONHash<K,V> {
         int aPos = 0;
         
       public boolean hasNext() {
-        if (this.buckets[pos] != null) {
+        if (buckets[pos] != null) {
+          @SuppressWarnings("unchecked")
           ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[pos];
           if (aPos < alist.size() - 1 && alist.get(aPos + 1) != null) {
             return true;
@@ -190,39 +191,41 @@ public class JSONHash<K,V> {
             int temp = aPos;
             aPos = 0;
             pos++;
-            hasNext();
+            boolean returnBool =  hasNext();
             aPos = temp;
             pos--;
+            return returnBool;
           } // else
-        } else if (pos < this.buckets.length - 1) {
+        } else if (pos < buckets.length - 1) {
             int temp = aPos;
             aPos = 0;
             pos++;
-            hasNext();
+            boolean returnBool = hasNext();
             aPos = temp;
             pos--;
+            return returnBool;
         } else {
           return false;
         } // else
       } // hasNext()
     
       public KVPair<JSONString, JSONValue> next() {
-        if (this.buckets[pos] != null) {
+        if (buckets[pos] != null) {
+          @SuppressWarnings("unchecked")
           ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) buckets[pos];
           if (aPos < alist.size() - 1) {
-            KVPair<JSONString,JSONValue> pair = alist.get();
+            KVPair<JSONString,JSONValue> pair = alist.get(aPos);
             aPos++;
             return pair;
           } else {
             aPos = 0;
             pos++;
-            next();
+            return next();
           } // else
-        } else if (pos < this.buckets.length - 1) {
-            int temp = aPos;
+        } else if (pos < buckets.length - 1) {
             aPos = 0;
             pos++;
-            hasNext();
+            return next();
         } else {
           throw new IndexOutOfBoundsException("No no no");
         } // else 
