@@ -131,7 +131,7 @@ public class JSON {
         } // if
 
         if ((char) ch == '{') {
-            JSONHash newHash = new JSONHash();
+            JSONHash<JSONString,JSONValue> newHash = new JSONHash<>();
             JSONString jString;
             JSONValue jValue;
 
@@ -143,6 +143,7 @@ public class JSON {
 
             return newHash;
         } // if
+        return null;
 
     } // parseKernel
 

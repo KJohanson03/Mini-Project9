@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * JSON hashes/objects.
  */
-public class JSONHash<K,V> {
+public class JSONHash<K,V> implements JSONValue{
 
   // +--------+------------------------------------------------------
   // | Fields |
