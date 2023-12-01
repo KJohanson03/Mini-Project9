@@ -80,6 +80,7 @@ public class JSON {
                 newArray.add(parseKernel(source));
 
             }
+            ch = skipWhitespace(source);
             return newArray;
         }
 
@@ -140,7 +141,7 @@ public class JSON {
                 jValue = parseKernel(source);
                 newHash.set(jString, jValue);
             }
-
+            ch = skipWhitespace(source);
             return newHash;
         } // if
         return null;
