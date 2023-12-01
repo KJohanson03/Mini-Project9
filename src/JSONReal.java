@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 /**
  * JSON reals.
  */
-public class JSONReal {
+public class JSONReal implements JSONValue{
 
   // +--------+------------------------------------------------------
   // | Fields |
@@ -86,13 +86,13 @@ public class JSONReal {
    * Write the value as JSON.
    * @throws Exception
    */
-  public void writeJSON(PrintWriter pen) throws Exception {
+  public void writeJSON(PrintWriter pen)  {
 
 
     if (this.value.compareTo(BigDecimal.ZERO) < 0 && (this.value.toString().charAt(1) == '0' )) { 
       //checks if has a leading zero or if its just a decimal
       if (this.value.toString().charAt(2) != '.' ) {
-        throw new Exception("Leading zero error");
+        return ;
       } // if 
 
     } // if 

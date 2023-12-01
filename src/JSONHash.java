@@ -70,7 +70,7 @@ public class JSONHash<K,V> {
       ArrayList<KVPair<JSONString,JSONValue>> alist = (ArrayList<KVPair<JSONString,JSONValue>>) this.buckets[i];
       if (alist != null) {
         for (KVPair<JSONString,JSONValue> pair : alist) {
-          holder = holder.concat(pair.key().toString() + ":" + pair.value().toString() + ", ");
+          holder = holder.concat(pair.key().toString() + ": " + pair.value().toString() + ", ");
         } // for each pair in the bucket
       } // if the current bucket is not null
     } // for each bucket

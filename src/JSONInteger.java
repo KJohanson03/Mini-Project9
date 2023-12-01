@@ -4,7 +4,7 @@ import java.math.BigInteger;
 /**
  * JSON integers.
  */
-public class JSONInteger {
+public class JSONInteger implements JSONValue{
 
   // +--------+------------------------------------------------------
   // | Fields |
@@ -82,12 +82,9 @@ public class JSONInteger {
   /**
    * Write the value as JSON.
    */
-  public void writeJSON(PrintWriter pen) throws Exception{
+  public void writeJSON(PrintWriter pen) {
     if ((this.value.compareTo(BigInteger.ZERO) < 0) && (this.value.toString().charAt(1) != '0')) {
         pen.println(this.toString());
-    }
-    else {
-        throw new Exception();
     }
 
     
