@@ -74,7 +74,8 @@ public class JSONHash<K,V> implements JSONValue{
         } // for each pair in the bucket
       } // if the current bucket is not null
     } // for each bucket
-    holder = holder.concat("}");
+    holder = holder.substring(0, holder.length() - 2);
+    holder = holder.concat(" }");
     return holder;
   } // toString()
 
@@ -102,7 +103,7 @@ public class JSONHash<K,V> implements JSONValue{
           ArrayList<KVPair<JSONString,JSONValue>> blist = (ArrayList<KVPair<JSONString,JSONValue>>) newOther.buckets[bucketPos];
 
           // iterates through the bucket to see if key value matches up 
-          for (int b = 0; b < blist.size();b++) {
+          for (int b = 0; b < blist.size(); b++) {
             if ( blist.get(b) == pair.value()) {
               return true;
             } // if 
